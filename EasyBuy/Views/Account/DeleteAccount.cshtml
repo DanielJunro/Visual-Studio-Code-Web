@@ -1,0 +1,292 @@
+﻿@{
+    ViewData["Title"] = "Xóa tài khoản - EasyBuy";
+    Layout = "~/Views/Layout/_LayoutUser.cshtml";
+}
+
+@section Scripts {
+    <script>
+        function validateDeleteForm() {
+            const password = document.getElementById('password').value.trim();
+            if (password === '') {
+                showError('password', 'Vui lòng nhập mật khẩu để xác nhận.');
+                return false;
+            }
+            return true;
+        }
+
+        function showError(fieldId, message) {
+            const field = document.getElementById(fieldId);
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'field-error';
+            errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
+            field.classList.add('error');
+            field.parentElement.appendChild(errorDiv);
+        }
+
+        function clearFormErrors() {
+            document.querySelectorAll('.field-error').forEach(el => el.remove());
+            document.querySelectorAll('.form-control').forEach(el => el.classList.remove('error'));
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('deleteForm');
+            form.addEventListener('submit', function (e) {
+                clearFormErrors();
+                if (!validateDeleteForm()) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+
+    <style>
+        /* --- Giống style UpdateAccount.cshtml nhưng màu đỏ cảnh báo --- */
+        .account-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+            .page-header::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 100px;
+                height: 4px;
+                background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+                border-radius: 2px;
+            }
+
+        .page-title {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: #dc3545;
+            margin-bottom: 1rem;
+            margin-top: 1rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: #6c757d;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .user-info-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e9ecef;
+            position: relative;
+        }
+
+            .user-info-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            }
+
+        .form-section {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid #e9ecef;
+            margin-bottom: 2rem;
+        }
+
+        .form-section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+            .form-section-title i {
+                color: #dc3545;
+            }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 0.75rem;
+                font-weight: 600;
+                color: #2c3e50;
+                font-size: 0.95rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+                .form-group label i {
+                    color: #dc3545;
+                }
+
+        .form-control {
+            width: 100%;
+            padding: 0.875rem 1.25rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+            font-family: inherit;
+        }
+
+            .form-control:focus {
+                border-color: #dc3545;
+                box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.1);
+                outline: none;
+                transform: translateY(-1px);
+            }
+
+            .form-control.error {
+                border-color: #dc3545;
+            }
+
+        .field-error {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn-update {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            border: none;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+        }
+
+            .btn-update:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+            }
+
+        .btn-cancel {
+            background: #6c757d;
+            border: none;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+            text-decoration: none;
+        }
+
+            .btn-cancel:hover {
+                background: #5a6268;
+                transform: translateY(-3px);
+                box-shadow: 0 8px 25px rgba(108, 117, 125, 0.4);
+            }
+    </style>
+}
+
+<div class="account-container">
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">
+            <i class="fas fa-user-times"></i>
+            Xóa tài khoản
+        </h1>
+        <p class="page-subtitle">Hành động này không thể hoàn tác. Vui lòng xác nhận mật khẩu.</p>
+    </div>
+
+    <div class="user-info-card">
+        <!-- Thông báo -->
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-circle"></i> @TempData["Error"]
+            </div>
+        }
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success">
+                <i class="fas fa-check-circle"></i> @TempData["Success"]
+            </div>
+        }
+
+        <form asp-action="DeleteAccount" method="post" id="deleteForm">
+            <input type="hidden" name="confirm" value="true" />
+            <div class="form-section">
+                <div class="form-section-title">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Xác nhận xóa tài khoản
+                </div>
+
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i>
+                        Mật khẩu hiện tại
+                    </label>
+                    <input type="password"
+                           id="password"
+                           name="password"
+                           class="form-control"
+                           placeholder="Nhập mật khẩu để xác nhận"
+                           required />
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button type="submit" class="btn-update">
+                    <i class="fas fa-trash-alt"></i>
+                    Xóa tài khoản
+                </button>
+                <a href="@Url.Action("UpdateAccount", "Account")" class="btn-cancel">
+                    <i class="fas fa-arrow-left"></i>
+                    Quay lại
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
